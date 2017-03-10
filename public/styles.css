@@ -5,3 +5,29 @@ h1 {
 	color:red;
 	text-align:center;
 }
+
+#wrapper {
+	text-align:center;
+	margin-top: 40px;
+}
+
+#guess {
+	width: 30px;
+}
+
+#message {
+	text-align:center;
+	margin:10px 10px ;
+}
+
+#history {
+	width: 300px;
+	height: 50px;
+	margin:auto;
+	text-align:center;
+	border: solid black 1px;
+}
+
+#history div:first-child {
+	font-size: 25px
+}
