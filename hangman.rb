@@ -66,7 +66,7 @@ class Game
 		guess = guess.downcase unless guess == nil
 		if choices.include?(guess)
 			message = "That letter has already been chosen!"
-		elsif ("a"..."z").to_a.include?(guess)==false
+		elsif ("a".."z").to_a.include?(guess)==false
 			message="That's not a letter!"
 		elsif check_word(word, guess)==[]
 			message = "Sorry! That letter is not in the word!"
