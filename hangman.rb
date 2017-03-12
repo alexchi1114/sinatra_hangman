@@ -16,7 +16,7 @@ class Game
 	def initialize
 		@random_word=get_word.downcase
 		@display=[]
-		@random_word.length.times{@display << " ____ "}
+		@random_word.length.times{@display << " _ "}
 		@choices=[]
 		@counter=0
 	end
@@ -49,6 +49,16 @@ class Game
 		end
 		
 		return index_array
+	end
+
+	def guess_word(string)
+		if string == '' || string ==nil
+			return nil
+		elsif string.downcase==self.random_word
+			return true
+		else
+			return false
+		end
 	end
 
 	def verify(word, guess)
@@ -92,18 +102,34 @@ end
 get '/play' do 
 	session[:word] = session[:game].random_word
 	session[:guess] = params['guess']
+	session[:word_guess] = params['word_guess']
 	session[:message] = ''
-	if session[:guess].nil?
-		session[:message] = ""
+	session[:word_guess_message] = ''
+
+	if session[:game].guess_word(session[:word_guess])==nil
+		session[:word_guess_message] = ''
+	elsif session[:game].guess_word(session[:word_guess])==true
+		redirect to('/win')
 	else
+		session[:word_guess_message] = 'That is wrong!'
+		session[:game].counter+=1
+	end
+
+
+	if session[:guess]==''
+		session[:message] = ''
+	elsif session[:guess]==nil
+		session[:message]=='Welcome!'
+	elsif
 		session[:message] = session[:game].verify(session[:word], session[:guess])
 	end
+
 	session[:game].modify_display(session[:word], session[:guess])
 	session[:display] = session[:game].print_display
 	session[:choices] = session[:game].choices
 	session[:counter] = session[:game].counter
 	
-	erb :index, :locals => {:display => session[:display], :word => session[:word], :choices => session[:choices], :message => session[:message], :counter => session[:counter]}
+	erb :index, :locals => {:display => session[:display], :word => session[:word], :choices => session[:choices], :message => session[:message], :counter => session[:counter], :word_guess_message => session[:word_guess_message]}
 end
 
 get '/new' do
@@ -114,6 +140,11 @@ end
 get '/reset' do
 	session[:game] = new_game
 	redirect to '/play'
+end
+
+get '/win' do
+	session[:display] = session[:game].random_word
+	erb :win, :locals => {:display => session[:display]}
 end
 
 

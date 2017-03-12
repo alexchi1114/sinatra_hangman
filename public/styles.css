@@ -4,6 +4,8 @@ h1 {
 #display {
 	color:red;
 	text-align:center;
+	height: 50px;
+  	font-size: 40px;
 }
 
 #wrapper {
