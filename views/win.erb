@@ -2,14 +2,19 @@
 	<head>
 		<title>Winner!</title>
 		<link href="styles.css" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Raleway:300" rel="stylesheet">
 	</head>
 		<body>
-			<h1>Hangman!</h1>
+			<h1>Alex Chi's Hangman!</h1>
+			<h2>Congratulations! You won!</h2>
 			<div id = "display">
 				<%= display %>
 			</div>
+			<div>
+				<img src="images/hangman_<%=counter%>.png" alt="hangman">
+			</div>
 			<form>
-				<div>
+				<div id = 'new_game'>
 					<a href='/reset'>New Game</a>
 				</div>
 			</form>

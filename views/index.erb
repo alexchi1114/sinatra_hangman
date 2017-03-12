@@ -2,11 +2,15 @@
 	<head>
 		<title>Hangman</title>
 		<link href="styles.css" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Raleway:300" rel="stylesheet">
 	</head>
 		<body>
-			<h1>Hangman!</h1>
+			<h1>Alex Chi's Hangman!</h1>
 			<div id = "display">
 				<%= display %>
+			</div>
+			<div>
+				<img src="images/hangman_<%=counter%>.png" alt="hangman">
 			</div>
 			<form>
 				<div id = "wrapper">
@@ -18,19 +22,14 @@
 					<div>
 						<input type='submit' value='submit'/>
 					</div>
-
-					<div>
-						<a href='/reset'>New Game</a>
-					</div>
-
 				</div>
 			</form>
 
-			<div id = 'message'>
+			<div class = 'message'>
 				<%= message %>
 			</div>
 
-			<div id = 'word_guess'>
+			<div class = 'message'>
 				<%= word_guess_message %>
 			</div>
 
@@ -42,12 +41,9 @@
 				<div id = 'choices'>
 					<%= choices.join(" ")%>
 				</div>
-			</div>
-			<div>
-				<%= counter %>
-			</div>
-		<div>
-			<%= word %>
-		</div>
+			</div>	
+			<div id = 'new_game'>
+				<a href='/reset'>New Game</a>
+			</div>	
 		</body>
 </html>

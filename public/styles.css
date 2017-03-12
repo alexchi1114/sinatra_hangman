@@ -1,8 +1,18 @@
+body{
+	font-family: 'Raleway', sans-serif;
+}
+
 h1 {
 	text-align: center;
+	color: #511cff;
 }
+
+h2 {
+	text-align:center;
+}
+
 #display {
-	color:red;
+	color:#4286f4;
 	text-align:center;
 	height: 50px;
   	font-size: 40px;
@@ -17,9 +27,10 @@ h1 {
 	width: 30px;
 }
 
-#message {
+.message {
 	text-align:center;
 	margin:10px 10px ;
+	color:#4286f4;
 }
 
 #history {
@@ -32,4 +43,33 @@ h1 {
 
 #history div:first-child {
 	font-size: 25px
+}
+
+#choices {
+	color: #68ed77;
+}
+
+img {
+
+	height:350px;
+	width:350px;
+}
+
+div {
+	text-align:center;
+}
+
+#new_game {
+	height:25px;
+	width: 100px;
+	padding-top:4px;
+	background-color: #511cff;
+	margin: auto;
+	border-radius:5px;
+	margin-top:10px;
+}
+
+a {
+	color:white;
+	text-decoration: none;
 }

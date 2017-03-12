@@ -66,6 +66,8 @@ class Game
 		guess = guess.downcase unless guess == nil
 		if choices.include?(guess)
 			message = "That letter has already been chosen!"
+		elsif ("a"..."z").to_a.include?(guess)==false
+			message="That's not a letter!"
 		elsif check_word(word, guess)==[]
 			message = "Sorry! That letter is not in the word!"
 			choices << guess
@@ -106,6 +108,9 @@ get '/play' do
 	session[:message] = ''
 	session[:word_guess_message] = ''
 
+
+
+
 	if session[:game].guess_word(session[:word_guess])==nil
 		session[:word_guess_message] = ''
 	elsif session[:game].guess_word(session[:word_guess])==true
@@ -123,11 +128,15 @@ get '/play' do
 	elsif
 		session[:message] = session[:game].verify(session[:word], session[:guess])
 	end
-
+	
+	session[:counter] = session[:game].counter
 	session[:game].modify_display(session[:word], session[:guess])
 	session[:display] = session[:game].print_display
 	session[:choices] = session[:game].choices
-	session[:counter] = session[:game].counter
+	
+	if session[:counter] == 6
+		redirect to('/lose')
+	end
 	
 	erb :index, :locals => {:display => session[:display], :word => session[:word], :choices => session[:choices], :message => session[:message], :counter => session[:counter], :word_guess_message => session[:word_guess_message]}
 end
@@ -144,9 +153,13 @@ end
 
 get '/win' do
 	session[:display] = session[:game].random_word
-	erb :win, :locals => {:display => session[:display]}
+	erb :win, :locals => {:display => session[:display], :counter => session[:counter]}
 end
 
+get '/lose' do
+	session[:display] = session[:game].random_word
+	erb :lose, :locals => {:display => session[:display], :counter => session[:counter]}
+end
 
 #prompt if letter has already been chosen
 #prompt if not a valid guess
