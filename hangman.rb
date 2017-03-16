@@ -7,7 +7,7 @@ configure do
 end
 
 class Game
-	attr_accessor :random_word, :display, :choices, :counter
+	attr_accessor :random_word, :display, :choices, :counter, :correct_counter
 	
 	#def history
 	#	alphabet = ("a".."z").to_a
@@ -19,6 +19,7 @@ class Game
 		@random_word.length.times{@display << " _ "}
 		@choices=[]
 		@counter=0
+		@correct_counter=0
 	end
 
 	def print_display
@@ -84,6 +85,7 @@ class Game
 		correct_positions = check_word(word, guess)
 		correct_positions.each do |value|
 			@display[value]=guess+" "
+			@correct_counter+=1
 		end
 	end
 end
@@ -102,14 +104,17 @@ get '/' do
 end
 
 get '/play' do 
+
 	session[:word] = session[:game].random_word
 	session[:guess] = params['guess']
 	session[:word_guess] = params['word_guess']
 	session[:message] = ''
 	session[:word_guess_message] = ''
 
-
-
+	if session[:display].join("").delete(' ')==session[:word]
+		redirect to('/win')
+	end
+	
 
 	if session[:game].guess_word(session[:word_guess])==nil
 		session[:word_guess_message] = ''
@@ -120,7 +125,6 @@ get '/play' do
 		session[:game].counter+=1
 	end
 
-
 	if session[:guess]==''
 		session[:message] = ''
 	elsif session[:guess]==nil
@@ -130,15 +134,22 @@ get '/play' do
 	end
 	
 	session[:counter] = session[:game].counter
+	
 	session[:game].modify_display(session[:word], session[:guess])
 	session[:display] = session[:game].print_display
 	session[:choices] = session[:game].choices
+	session[:correct_counter] = session[:game].correct_counter
 	
+
+	if session[:correct_counter] == session[:word].length
+		redirect to('/win')
+	end
+
 	if session[:counter] == 6
 		redirect to('/lose')
 	end
 	
-	erb :index, :locals => {:display => session[:display], :word => session[:word], :choices => session[:choices], :message => session[:message], :counter => session[:counter], :word_guess_message => session[:word_guess_message]}
+	erb :index, :locals => {:display => session[:display], :word => session[:word], :choices => session[:choices], :message => session[:message], :counter => session[:counter], :word_guess_message => session[:word_guess_message], :correct_counter => session[:correct_counter]}
 end
 
 get '/new' do
