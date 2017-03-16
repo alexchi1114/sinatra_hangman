@@ -109,11 +109,6 @@ get '/play' do
 	session[:message] = ''
 	session[:word_guess_message] = ''
 
-	if session[:display].join("").delete(' ')==session[:word]
-		redirect to('/win')
-	end
-	
-
 	if session[:game].guess_word(session[:word_guess])==nil
 		session[:word_guess_message] = ''
 	elsif session[:game].guess_word(session[:word_guess])==true
@@ -137,6 +132,9 @@ get '/play' do
 	session[:display] = session[:game].print_display
 	session[:choices] = session[:game].choices
 
+	if session[:display].delete(" ") == session[:word]
+		redirect to('/win')
+	end
 	if session[:counter] == 6
 		redirect to('/lose')
 	end
