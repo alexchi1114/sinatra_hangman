@@ -7,7 +7,7 @@ configure do
 end
 
 class Game
-	attr_accessor :random_word, :display, :choices, :counter, :correct_counter
+	attr_accessor :random_word, :display, :choices, :counter
 	
 	#def history
 	#	alphabet = ("a".."z").to_a
@@ -19,7 +19,6 @@ class Game
 		@random_word.length.times{@display << " _ "}
 		@choices=[]
 		@counter=0
-		@correct_counter=0
 	end
 
 	def print_display
@@ -85,7 +84,6 @@ class Game
 		correct_positions = check_word(word, guess)
 		correct_positions.each do |value|
 			@display[value]=guess+" "
-			@correct_counter+=1
 		end
 	end
 end
@@ -138,18 +136,12 @@ get '/play' do
 	session[:game].modify_display(session[:word], session[:guess])
 	session[:display] = session[:game].print_display
 	session[:choices] = session[:game].choices
-	session[:correct_counter] = session[:game].correct_counter
-	
-
-	if session[:correct_counter] == session[:word].length
-		redirect to('/win')
-	end
 
 	if session[:counter] == 6
 		redirect to('/lose')
 	end
 	
-	erb :index, :locals => {:display => session[:display], :word => session[:word], :choices => session[:choices], :message => session[:message], :counter => session[:counter], :word_guess_message => session[:word_guess_message], :correct_counter => session[:correct_counter]}
+	erb :index, :locals => {:display => session[:display], :word => session[:word], :choices => session[:choices], :message => session[:message], :counter => session[:counter], :word_guess_message => session[:word_guess_message]}
 end
 
 get '/new' do
