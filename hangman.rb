@@ -26,7 +26,7 @@ class Game
 	end
 
     def get_word
-		dictionary=File.open("dictionary.txt", "r").readlines.each{|line| line}
+		dictionary=File.open("math_dictionary.txt", "r").readlines.each{|line| line}
 		search=true
 		while search==true
 			random_word=dictionary[rand(0...dictionary.length)].gsub(/\s+/, "")

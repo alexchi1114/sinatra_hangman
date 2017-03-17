@@ -1,0 +1,11 @@
+scatterplot
+outlier
+association
+statistics
+positive
+negative
+linear
+trendline
+dependent
+independent
+variable
